@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Kafedralar</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: cadetblue">
+    <a class="navbar-brand" href="#"><em><b>UrDU.uz</b></em></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+
+
+<h4 class="text-center">URGANCH DAVLAT UNIVERSITETI</h4>
+<h4 class="text-center">KAFEDRALAR</h4>
+<div class="row justify-content-center">
+    <div class="col-auto">
+        <table class="table table-bordered table-striped">
+            <thead style="background-color: #6c7ae0">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fakultet nomi</th>
+                <th scope="col">Kafedra nomi</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i in fakultet_list %}
+                {% if i.active == True %}
+                    <tr>
+                        <th style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</th>
+                        <td style="vertical-align: middle;"> {{ i.name }}</td>
+                        <td>
+                            {% for j in kafedra_list %}
+                                {% if i.id == j.parent %}
+                                    <a href="{% url 'yonalishlarview' j.id %}"> {{ j.name }}<a/><br>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+</body>
+</html>
