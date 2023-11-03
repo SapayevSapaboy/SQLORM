@@ -31,16 +31,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% regroup department by field_department.name as department_groups %}
-
-                {% for group in department_groups %}
+                {% for s in department %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td>{{ group.grouper }}</td>
+                        <td>{{ s.name }}</td>
                         <td></td>
                         <td></td>
-                        <td><br></td>
-                        <td>{{ group.list|length }}</td>
+                        <td></td>
+                        <td>{{ s.estudentmeta_set.count|length }}</td>
                         <td></td>
                     </tr>
                 {% endfor %}

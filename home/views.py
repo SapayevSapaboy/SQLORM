@@ -30,8 +30,8 @@ def yonalish_view(request, kafedra_id):
 
 def oquv_yiliview(request):
     context = {
-        "student_list": EStudentMeta.objects.filter(field_student_status=11,active=True),
-     #  "department": EDepartment.objects.filter(field_structure_type=11,estudentmeta__field_student_status=11,estudentmeta__active=True).filter(~Q(id__in=[7, 8, 76, 77])),
+      "student_list": EStudentMeta.objects.filter(field_student_status=11,active=True),
+      "department": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
     }
     return render(request, "oquv_yili.html", context)
 
