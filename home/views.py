@@ -81,8 +81,8 @@ def oquv_yiliview(request):
     for i in data:
         a = i[1]+i[2]+i[3]+i[4]
         data[cnt].append(a)
-        data[cnt].append(int(i[3]/a*100))
-        sum_foiz+=int(int(i[3]/a*100)/len(data))
+        data[cnt].append((i[3]/a*100))
+        sum_foiz+=(i[3]/a*100)/len(data)
         cnt+=1
     # for i in data:
     #     print(i)

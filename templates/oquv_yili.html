@@ -11,8 +11,8 @@
 <body>
 {% block content %}
     <br>
-    <h5 class="text-center">URGANCH DAVLAT UNIVERSITETI</h5>
-    <h5 class="text-center">KAFEDRALAR</h5>
+    <h4 class="text-center">TALABALARNI KURSDAN-KURSGA O'TKAZILISH KO'RSATKICHI </h4>
+    <BR>
     <div class="container">
         <div class="row">
 
@@ -44,7 +44,7 @@
                         <td style="text-align: center">{{ s.3 }}</td>
                         <td style="text-align: center">{{ s.4 }}</td>
                         <td style="text-align: center">{{ s.5 }}</td>
-                        <td style="text-align: center">{{ s.6 }}%</td>
+                        <td style="text-align: center">{{ s.6|floatformat:2 }}%</td>
                     </tr>
 
                 {% endfor %}
@@ -59,7 +59,7 @@
                         </th>
                     {% endfor %}
                     <th scope="col" style="text-align: center">{{ sum_year_list }}</th>
-                    <th scope="col" style="text-align: center">{{ sum_foiz }}%</th>
+                    <th scope="col" style="text-align: center">{{ sum_foiz|floatformat:2 }}%</th>
                 </tr>
                 </thead>
             </table>
