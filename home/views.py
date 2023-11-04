@@ -1,11 +1,11 @@
 import datetime
 
 from django.shortcuts import render
-
+from django.db.models import Count
 from .models import EDepartment
 from .models import ECirculationSheet
 from django.db.models import Q
-from .models import ECurriculum, ECurriculumSubject, EEducationYear, HCourse, HSubjectBlock, HSubjectGroup,EStudentMeta
+from .models import ECurriculum, ECurriculumSubject, EEducationYear, HCourse, HSubjectBlock, HSubjectGroup, EStudentMeta
 
 
 # Create your views here.
@@ -28,22 +28,85 @@ def yonalish_view(request, kafedra_id):
 
     return render(request, "fanlar.html", context)
 
+
 def oquv_yiliview(request):
+    student_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values('field_department__name','field_education_year__name').annotate(
+        count=Count('field_department__name')).order_by('field_department__name', 'field_education_year__name')
+
+    year_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values('field_education_year__name').annotate(count=Count('id'))
+    sum_year_list=0
+    for i in year_list:
+        sum_year_list+=i['count']
+
+    data = []
+    row = []
+    cnt = 0
+    dep = student_list[0]['field_department__name']
+    for i in student_list:
+        if dep != i['field_department__name']:
+            while len(row) < len(year_list) + 1:
+                row.append(0)
+            data.append(row)
+            row = []
+            dep = i['field_department__name']
+            cnt = 0
+
+        if len(row) == 0:
+            row.append(dep)
+        if dep == i['field_department__name']:
+
+            if year_list[cnt]['field_education_year__name'] != i['field_education_year__name']:
+                while True:
+                    if year_list[cnt]['field_education_year__name'] == i['field_education_year__name']:
+                        row.append(i['count'])
+                        cnt += 1
+                        break
+                    else:
+                        row.append(0)
+                        cnt += 1
+            else:
+
+                if year_list[cnt]['field_education_year__name'] == i['field_education_year__name']:
+                    row.append(i['count'])
+                    cnt += 1
+                else:
+                    row.append(0)
+                    cnt += 1
+    while len(row) < len(year_list) + 1:
+        row.append(0)
+    data.append(row)
+
+    cnt = 0
+    sum_foiz=0
+    for i in data:
+        a = i[1]+i[2]+i[3]+i[4]
+        data[cnt].append(a)
+        data[cnt].append(int(i[3]/a*100))
+        sum_foiz+=int(int(i[3]/a*100)/len(data))
+        cnt+=1
+    # for i in data:
+    #     print(i)
+
     context = {
-      "student_list": EStudentMeta.objects.filter(field_student_status=11,active=True),
-      "department": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
+
+        "year_list": year_list,
+        'data': data,
+        'sum_year_list':sum_year_list,
+        'sum_foiz':sum_foiz
+        # "department": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
     }
+    # print(context['student_list'])
     return render(request, "oquv_yili.html", context)
 
 
-#def dependantfild(request):
- #   yearid = request.GET.get('year', None)
-  #  stateid = request.GET.get('state', None)
-   # state = None
-   # district = None
-   # if countryid:
-   #     getyear = EEducationYear.objects.get(id= yearid)
-   #     state = ECurriculum.objects.get(emp)
+# def dependantfild(request):
+#   yearid = request.GET.get('year', None)
+#  stateid = request.GET.get('state', None)
+# state = None
+# district = None
+# if countryid:
+#     getyear = EEducationYear.objects.get(id= yearid)
+#     state = ECurriculum.objects.get(emp)
 
 # def fanlarview(request,kafedra_id):
 #     edu_year_list={}
