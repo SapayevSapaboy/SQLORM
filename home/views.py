@@ -3,13 +3,10 @@ import datetime
 from django.shortcuts import render
 from django.db.models import Count
 from .models import EDepartment
-from .models import ECirculationSheet
 from django.db.models import Q
-import datetime
-from .models import ECurriculum, ECurriculumSubject, EEducationYear, HCourse, HSubjectBlock, HSubjectGroup, EStudentMeta
+from .models import  ECurriculumSubject, EEducationYear, EStudentMeta
 
 
-# Create your views here.
 
 def homeview(request):
     context = {
@@ -89,8 +86,6 @@ def oquv_yiliview(request):
         data[cnt].append((i[3] / a * 100))
         sum_foiz += (i[3] / a * 100) / len(data)
         cnt += 1
-    # for i in data:
-    #     print(i)
 
     context = {
 
@@ -98,30 +93,6 @@ def oquv_yiliview(request):
         'data': data,
         'sum_year_list': sum_year_list,
         'sum_foiz': sum_foiz
-        # "department": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
     }
-    # print(context['student_list'])
     return render(request, "oquv_yili.html", context)
 
-# def dependantfild(request):
-#   yearid = request.GET.get('year', None)
-#  stateid = request.GET.get('state', None)
-# state = None
-# district = None
-# if countryid:
-#     getyear = EEducationYear.objects.get(id= yearid)
-#     state = ECurriculum.objects.get(emp)
-
-# def fanlarview(request,kafedra_id):
-#     edu_year_list={}
-#     current_year=datetime.datetime.now().year
-#     for i in range(2016,current_year+1):
-#         edu_year_list.update({f"{i}":f"{i}-{i+1}"})
-#
-#     context = {
-#         "edu_year_list":edu_year_list,
-#         "oquvyili": ECirculationSheet.objects.filter(field_department__field_structure_type=11)
-#     }
-#
-#     return render(request, 'fanlar.html',context)
-#
