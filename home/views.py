@@ -36,8 +36,7 @@ def oquv_yiliview(request):
         count=Count('field_department__name')).order_by('field_department__name', 'field_education_year__name').filter(
         ~Q(field_department__in=[7, 8, 77]))
 
-    year_list = EStudentMeta.objects.filter(field_student_status=11, active=True,
-                                            ).values(
+    year_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values(
         'field_education_year__name').annotate(count=Count('id')).filter(
         ~Q(field_department__in=[7, 8, 77]))
     sum_year_list = 0
