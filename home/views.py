@@ -30,13 +30,17 @@ def yonalish_view(request, kafedra_id):
 
 
 def oquv_yiliview(request):
-    student_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values('field_department__name','field_education_year__name').annotate(
-        count=Count('field_department__name')).order_by('field_department__name', 'field_education_year__name')
+    student_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values('field_department__name',
+                                                                                            'field_education_year__name').annotate(
+        count=Count('field_department__name')).order_by('field_department__name', 'field_education_year__name').filter(
+        ~Q(field_department__in=[7, 8, 77]))
 
-    year_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values('field_education_year__name').annotate(count=Count('id'))
-    sum_year_list=0
+    year_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values(
+        'field_education_year__name').annotate(count=Count('id')).filter(
+        ~Q(field_department__in=[7, 8, 77]))
+    sum_year_list = 0
     for i in year_list:
-        sum_year_list+=i['count']
+        sum_year_list += i['count']
 
     data = []
     row = []
@@ -77,13 +81,13 @@ def oquv_yiliview(request):
     data.append(row)
 
     cnt = 0
-    sum_foiz=0
+    sum_foiz = 0
     for i in data:
-        a = i[1]+i[2]+i[3]+i[4]
+        a = i[1] + i[2] + i[3] + i[4]
         data[cnt].append(a)
-        data[cnt].append((i[3]/a*100))
-        sum_foiz+=(i[3]/a*100)/len(data)
-        cnt+=1
+        data[cnt].append((i[3] / a * 100))
+        sum_foiz += (i[3] / a * 100) / len(data)
+        cnt += 1
     # for i in data:
     #     print(i)
 
@@ -91,13 +95,12 @@ def oquv_yiliview(request):
 
         "year_list": year_list,
         'data': data,
-        'sum_year_list':sum_year_list,
-        'sum_foiz':sum_foiz
+        'sum_year_list': sum_year_list,
+        'sum_foiz': sum_foiz
         # "department": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
     }
     # print(context['student_list'])
     return render(request, "oquv_yili.html", context)
-
 
 # def dependantfild(request):
 #   yearid = request.GET.get('year', None)
