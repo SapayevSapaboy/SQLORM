@@ -29,6 +29,17 @@ def yonalish_view(request, kafedra_id):
     return render(request, "fanlar.html", context)
 
 
+
+def fanlarga_birikishview(request,):
+    context = {
+        "year_list": EEducationYear.objects.all().order_by('code'),
+    }
+
+    return render(request, "fanlarga_birikish.html", context)
+
+
+
+
 def oquv_yiliview(request):
     student_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values('field_department__name',
                                                                                             'field_education_year__name').annotate(
@@ -83,10 +94,11 @@ def oquv_yiliview(request):
     cnt = 0
     sum_foiz = 0
     for i in data:
-        a = i[1] + i[2] + i[3] + i[4]
+        a = sum(i[1:6])
         data[cnt].append(a)
-        data[cnt].append((i[3] / a * 100))
-        sum_foiz += (i[3] / a * 100) / len(data)
+        b="%.2f"% ((i[3] / a * 100))
+        data[cnt].append(b)
+        sum_foiz += float(b)
         cnt += 1
 
     context = {
@@ -94,8 +106,7 @@ def oquv_yiliview(request):
         "year_list": year_list,
         'data': data,
         'sum_year_list': sum_year_list,
-        'sum_foiz': sum_foiz
+        'sum_foiz':  sum_foiz/len(data)
     }
-    # print(context['student_list'])
-    return render(request, "oquv_yili.html", context)
 
+    return render(request, "oquv_yili.html", context)

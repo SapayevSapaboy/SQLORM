@@ -18,7 +18,7 @@
 
             <br>
             <br>
-            <table class="table table-bordered">
+            <table id="talaba_kontingent_table" class="table table-bordered">
                 <thead>
                 <tr style="background-color: #364958;">
                     <th scope="col" style="text-align: center;color: white;">№</th>
@@ -33,35 +33,36 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 {% for s in data %}
-
                     <tr>
                         <td style="text-align: center">{{ forloop.counter }}</td>
-                        <td>{{ s.0 }}</td>
-                        <td style="text-align: center">{{ s.1 }}</td>
-                        <td style="text-align: center">{{ s.2 }}</td>
-                        <td style="text-align: center">{{ s.3 }}</td>
-                        <td style="text-align: center">{{ s.4 }}</td>
-                        <td style="text-align: center">{{ s.5 }}</td>
-                        <td style="text-align: center">{{ s.6|floatformat:2 }}%</td>
+                        {% for j in s %}
+                            {% if forloop.last %}
+                                <td style="text-align: center;background-color:hsl({{ j }}, 100%, 42%)">{{ j }}%</td>
+                            {% elif forloop.first %}
+                                <td>{{ j }}</td>
+                            {% else %}
+                                <td style="text-align: center">{{ j }}</td>
+                            {% endif %}
+                        {% endfor %}
                     </tr>
 
                 {% endfor %}
                 </tbody>
-                <thead class="thead-dark">
-                <tr>
-                    <th scope="col" style="text-align: center"></th>
-                    <th scope="col" style="text-align: center">JAMI</th>
+                <tr style="background-color: #364958;">
+                    <th scope="col" style="text-align: center;color: white;"></th>
+                    <th scope="col" style="text-align: center; color: white;">JAMI</th>
                     {% for year in year_list %}
-                        <th scope="col" style="text-align: center">
+                        <th scope="col" style="text-align: center; color: white;">
                             {{ year.count }}
                         </th>
                     {% endfor %}
-                    <th scope="col" style="text-align: center">{{ sum_year_list }}</th>
-                    <th scope="col" style="text-align: center">{{ sum_foiz|floatformat:2 }}%</th>
+                    <th scope="col"
+                        style="text-align: center; color: white;">{{ sum_year_list }}</th>
+                    <th scope="col"
+                        style="text-align: center; color: white;">{{ sum_foiz|floatformat:2 }}%
+                    </th>
                 </tr>
-                </thead>
             </table>
         </div>
     </div>
