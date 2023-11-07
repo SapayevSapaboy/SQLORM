@@ -44,22 +44,24 @@
                         <td style="text-align: center">{{ s.3 }}</td>
                         <td style="text-align: center">{{ s.4 }}</td>
                         <td style="text-align: center">{{ s.5 }}</td>
-                        <td style="text-align: center;background-color:hsl({{ s.6|floatformat:2 }}, 100%, 43%)">{{ s.6|floatformat:2 }}%</td>
+                        <td style="text-align: center">{{ s.6|floatformat:2 }}%</td>
                     </tr>
 
                 {% endfor %}
                 </tbody>
-                <tr style="background-color: #364958;">
-                    <th scope="col" style="text-align: center;color: white;"></th>
-                    <th scope="col" style="text-align: center; color: white;">JAMI</th>
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col" style="text-align: center"></th>
+                    <th scope="col" style="text-align: center">JAMI</th>
                     {% for year in year_list %}
-                        <th scope="col" style="text-align: center; color: white;">
+                        <th scope="col" style="text-align: center">
                             {{ year.count }}
                         </th>
                     {% endfor %}
-                    <th scope="col" style="text-align: center; color: white;">{{ sum_year_list }}</th>
-                    <th scope="col" style="text-align: center; color: white;">{{ sum_foiz|floatformat:2 }}%</th>
+                    <th scope="col" style="text-align: center">{{ sum_year_list }}</th>
+                    <th scope="col" style="text-align: center">{{ sum_foiz|floatformat:2 }}%</th>
                 </tr>
+                </thead>
             </table>
         </div>
     </div>

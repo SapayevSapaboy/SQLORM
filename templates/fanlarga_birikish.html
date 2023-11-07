@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Fanga biriktirish</title>
+</head>
+<body>
+
+{% block content %}
+    <br>
+    <h4 class="text-center">FANLARGA BIRIKMAGAN TALABALARNI ANIQLASH KO'RSATKICHI</h4>
+    <BR>
+    <div class="container">
+        <div class="row">
+
+            <br>
+            <br>
+            <table id="talaba_kontingent_table" class="table table-bordered">
+                <thead>
+                <tr style="background-color: #364958;">
+                    <th scope="col" style="text-align: center;color: white;  vertical-align: middle;">№</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">FAKULTETLAR</th>
+                        <th scope="col" style="text-align: center;color: white; vertical-align: middle;">O'QUV REJA</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">SEMESTER</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">TALABALAR</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">FANLAR</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">YUKLAMA</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">KREDIT</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKKAN TALABALAR</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKMAGAN TALABALAR</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for f in fanga_birikish %}
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</td>
+                        <td style="text-align: center">{{ f.field_department.name }}</td>
+                        <td style="text-align: center">{{ f.field_curriculum.name }}</td>
+                        <td style="text-align: center">{{ f.field_semestr }}</td>
+                        <td style="text-align: center">{{ f.field_student.estudentmeta_set.count}}</td>
+                        <td style="text-align: center">{{ f.field_curriculu }}</td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+</body>
+</html>

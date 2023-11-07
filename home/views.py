@@ -3,10 +3,12 @@ import datetime
 from django.shortcuts import render
 from django.db.models import Count
 from .models import EDepartment
+from .models import ECirculationSheet
 from django.db.models import Q
-from .models import  ECurriculumSubject, EEducationYear, EStudentMeta
+from .models import ECurriculum, ECurriculumSubject, EEducationYear, HCourse, HSubjectBlock, HSubjectGroup, EStudentMeta
 
 
+# Create your views here.
 
 def homeview(request):
     context = {
@@ -94,5 +96,6 @@ def oquv_yiliview(request):
         'sum_year_list': sum_year_list,
         'sum_foiz': sum_foiz
     }
+    # print(context['student_list'])
     return render(request, "oquv_yili.html", context)
 
