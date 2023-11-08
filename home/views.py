@@ -4,6 +4,7 @@ from multiprocessing import connection
 from django.shortcuts import render
 from django.db.models import Count
 from .models import EDepartment
+
 from django.db.models import Q
 from .models import ECurriculumSubject, EEducationYear, EStudentMeta
 
@@ -30,23 +31,6 @@ def yonalish_view(request, kafedra_id):
 
 
 def fanlarga_birikishview(request,):
-
-    # with connection.cursor() as cursor:
-    #     cursor.execute(""" SELECT * FROM e_department WHERE "_structure_type"='11' AND "id" NOT IN (77, 8, 7, 6);""")
-    #     faculties_list = cursor.fetchall()
-    #     cursor.execute(""" SELECT * FROM h_education_form WHERE code in ('11','13','15','16','17') ORDER BY code ;""")
-    #     education_form_list = cursor.fetchall()
-    #
-    # bugungi_yil = datetime.datetime.now().year
-    # entered_year = [{"year": i, "name": f"{i}-{i + 1}"} for i in range(bugungi_yil - 5, bugungi_yil + 1)]
-    #
-    # context = {
-    #     "faculties_list": faculties_list,
-    #     "education_form_list": education_form_list,
-    #     "entered_year": entered_year,
-    #
-    # }
-
     context = {
         "year_list1": EEducationYear.objects.all().order_by('code'),
         "fakultet_list1": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
@@ -55,6 +39,7 @@ def fanlarga_birikishview(request,):
     }
 
     return render(request, "fanlarga_birikish.html", context)
+
 
 
 
