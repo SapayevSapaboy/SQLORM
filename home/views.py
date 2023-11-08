@@ -32,7 +32,7 @@ def yonalish_view(request, kafedra_id):
 
 def fanlarga_birikishview(request,):
     context = {
-        "year_list": EEducationYear.objects.all().order_by('code'),
+        "fanga_birikish": EStudentMeta.objects.filter(field_student_status=11, active=True)[:10]
     }
 
     return render(request, "fanlarga_birikish.html", context)
