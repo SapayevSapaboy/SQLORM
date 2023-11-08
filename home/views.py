@@ -43,6 +43,8 @@ def fanlarga_birikishview(request,):
 
 
 
+
+
 def oquv_yiliview(request):
     student_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values('field_department__name',
                                                                                             'field_education_year__name').annotate(
