@@ -17,6 +17,45 @@
     <div class="container">
         <div class="row">
 
+
+            <div class="select-container row ">
+                {% csrf_token %}
+                <div class="form-floating col-md-4 col-lg-4 col-sm-4">
+                    <select id="fakultet" name="fakultet" class="form-select">
+                        <option hidden selected disabled value="">Fakultetni tanlang</option>
+                        {% for i in fakultet_list1 %}
+                            <option value="">{{ i.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="fakultet">Fakultet</label>
+                </div>
+                <div class="form-floating col-md-4 col-lg-4 col-sm-4">
+                    <select id="fakultet" name="fakultet" class="form-select">
+                        <option hidden selected disabled value="">O'quv yilini tanlang</option>
+                        {% for i in year_list1 %}
+                            <option value="">{{ i.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="fakultet">O'quv yili</label>
+                </div>
+                <div class="form-floating col-md-4 col-lg-4 col-sm-4">
+                    <select id="fakultet" name="fakultet" class="form-select">
+                        <option hidden selected disabled value="">Semestrni tanlang</option>
+                        {% for i in faculties_list %}
+                            <option value="{{ i.0 }}">{{ i.2 }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="fakultet">Semestr</label>
+                </div>
+
+                <div class="form-floating col-md-4 col-lg-4 col-sm-4">
+                    <button type="submit" name="submitbtn" class="btn btn-success">
+                        Tekshirish
+                    </button>
+                </div>
+            </div>
+
+
             <br>
             <br>
             <table id="talaba_kontingent_table" class="table table-bordered">
@@ -24,14 +63,17 @@
                 <tr style="background-color: #364958;">
                     <th scope="col" style="text-align: center;color: white;  vertical-align: middle;">№</th>
                     <th scope="col" style="text-align: center;color: white; vertical-align: middle;">FAKULTETLAR</th>
-                        <th scope="col" style="text-align: center;color: white; vertical-align: middle;">O'QUV REJA</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">O'QUV REJA</th>
                     <th scope="col" style="text-align: center;color: white; vertical-align: middle;">SEMESTER</th>
                     <th scope="col" style="text-align: center;color: white; vertical-align: middle;">TALABALAR</th>
                     <th scope="col" style="text-align: center;color: white; vertical-align: middle;">FANLAR</th>
                     <th scope="col" style="text-align: center;color: white; vertical-align: middle;">YUKLAMA</th>
                     <th scope="col" style="text-align: center;color: white; vertical-align: middle;">KREDIT</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKKAN TALABALAR</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKMAGAN TALABALAR</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKKAN TALABALAR
+                    </th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKMAGAN
+                        TALABALAR
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -41,8 +83,8 @@
                         <td style="text-align: center">{{ f.field_department.name }}</td>
                         <td style="text-align: center">{{ f.field_curriculum.name }}</td>
                         <td style="text-align: center">{{ f.field_semestr }}</td>
-                        <td style="text-align: center">{{ f.field_student.estudentmeta_set.count}}</td>
-                        <td style="text-align: center">{{ f.field_curriculu }}</td>
+                        <td style="text-align: center">{{ f.field_student }}</td>
+                        <td style="text-align: center">{{ f.field_student.estudentsubject_set.count }}</td>
                         <td style="text-align: center"></td>
                         <td style="text-align: center"></td>
                         <td style="text-align: center"></td>

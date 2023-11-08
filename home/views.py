@@ -3,9 +3,8 @@ import datetime
 from django.shortcuts import render
 from django.db.models import Count
 from .models import EDepartment
-from .models import ECirculationSheet
 from django.db.models import Q
-from .models import ECurriculum, ECurriculumSubject, EEducationYear, HCourse, HSubjectBlock, HSubjectGroup, EStudentMeta
+from .models import ECurriculumSubject, EEducationYear, EStudentMeta
 
 
 # Create your views here.
@@ -32,11 +31,13 @@ def yonalish_view(request, kafedra_id):
 
 def fanlarga_birikishview(request,):
     context = {
-        "year_list": EEducationYear.objects.all().order_by('code'),
+        "year_list1": EEducationYear.objects.all().order_by('code'),
+        "fakultet_list1": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
+        "fanga_birikish": EStudentMeta.objects.filter(field_student_status=11, active=True).filter(
+        ~Q(field_department__in=[7, 8, 77]))[:50]
     }
 
     return render(request, "fanlarga_birikish.html", context)
-
 
 
 
