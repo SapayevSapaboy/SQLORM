@@ -20,7 +20,7 @@
 
             <div class="select-container row ">
                 {% csrf_token %}
-                <div class="form-floating col-md-4 col-lg-4 col-sm-4">
+                <div class="form-floating col-md-4 col-lg-6 col-sm-4">
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">Fakultetni tanlang</option>
                         {% for i in fakultet_list1 %}
@@ -48,10 +48,6 @@
                     <label for="fakultet">Semestr</label>
                 </div>
 
-                <div class="form-floating col-md-4 col-lg-4 col-sm-4">
-                    <button type="submit" name="submitbtn" class="btn btn-success">
-                        Tekshirish
-                    </button>
                 </div>
             </div>
 
@@ -83,8 +79,8 @@
                         <td style="text-align: center">{{ f.field_department.name }}</td>
                         <td style="text-align: center">{{ f.field_curriculum.name }}</td>
                         <td style="text-align: center">{{ f.field_semestr }}</td>
-                        <td style="text-align: center">{{ f.field_student }}</td>
-                        <td style="text-align: center">{{ f.field_student.estudentsubject_set.count }}</td>
+                        <td style="text-align: center">{{ f.field_curriculum.estudentmeta_set.filter.count }}</td>
+                        <td style="text-align: center">{{ f.field_curriculum.ecurriculumsubject_set.count}}</td>
                         <td style="text-align: center"></td>
                         <td style="text-align: center"></td>
                         <td style="text-align: center"></td>
