@@ -1,3 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Kafedra Fanlari</title>
+</head>
+<body>
+{% block content %}
+       <br>
+    <h4 class="text-center">FANLARGA BIRIKMAGAN TALABALARNI ANIQLASH KO'RSATKICHI</h4>
+    <BR>
+    <div class="container">
+        <div class="row">
 
 
             <div class="select-container row ">
@@ -56,14 +73,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for f in fanga_birikish %}
+                {% for f in queryset %}
                     <tr>
                         <td style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</td>
-                        <td style="text-align: center">{{ f.field_department.name }}</td>
-                        <td style="text-align: center">{{ f.field_curriculum.name }}</td>
-                        <td style="text-align: center">{{ f.field_semestr }}</td>
-                        <td style="text-align: center">{{ f.field_curriculum.estudentmeta_set.filter.count }}</td>
-                        <td style="text-align: center">{{ f.field_curriculum.ecurriculumsubject_set.count}}</td>
+                        <td style="">{{ f.field_curriculum__field_department__name }}</td>
+                        <td style="text-align: center">{{ f.field_curriculum__name }}</td>
+                        <td style="text-align: center">{{ f.name }}</td>
+                        <td style="text-align: center">{{ f.field_education_year__esubjecttaskstudent__field_student.count }}</td>
+                        <td style="text-align: center">{{ f.field_education_year__eretrainingstudent__subjects_count}}</td>
                         <td style="text-align: center"> </td>
                         <td style="text-align: center"> </td>
                         <td style="text-align: center"></td>
