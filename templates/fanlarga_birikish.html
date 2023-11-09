@@ -20,7 +20,7 @@
 
             <div class="select-container row ">
                 {% csrf_token %}
-                <div class="form-floating col-md-4 col-lg-6 col-sm-4">
+                <div class="form-floating col-md-4 col-lg-2 col-sm-6">
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">Fakultetni tanlang</option>
                         {% for i in fakultet_list1 %}
@@ -29,7 +29,7 @@
                     </select>
                     <label for="fakultet">Fakultet</label>
                 </div>
-                <div class="form-floating col-md-4 col-lg-4 col-sm-4">
+                <div class="form-floating col-md-4 col-lg-2 col-sm-6">
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">O'quv yilini tanlang</option>
                         {% for i in year_list1 %}
@@ -38,11 +38,11 @@
                     </select>
                     <label for="fakultet">O'quv yili</label>
                 </div>
-                <div class="form-floating col-md-4 col-lg-4 col-sm-4">
+                <div class="form-floating col-md-4 col-lg-2 col-sm-6">
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">Semestrni tanlang</option>
-                        {% for i in faculties_list %}
-                            <option value="{{ i.0 }}">{{ i.2 }}</option>
+                        {% for i in fan_list %}
+                            <option value="">{{ i.field_semester }}</option>
                         {% endfor %}
                     </select>
                     <label for="fakultet">Semestr</label>

@@ -31,8 +31,12 @@ def yonalish_view(request, kafedra_id):
 
 
 def fanlarga_birikishview(request,):
+
+
     context = {
         "year_list1": EEducationYear.objects.all().order_by('code'),
+        "fan_list": ECurriculumSubject.objects.filter(field_curriculum__active=True).values('field_semester').annotate(
+        count=Count('field_semester')).order_by('field_semester'),
         "fakultet_list1": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
         "fanga_birikish": EStudentMeta.objects.filter(field_student_status=11, active=True, ).order_by('field_department__name', 'field_education_year__name').filter(
         ~Q(field_department__in=[7, 8, 77]))[:20]
