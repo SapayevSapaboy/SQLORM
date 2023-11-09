@@ -1,12 +1,11 @@
 import datetime
+from multiprocessing import connection
 
 from django.shortcuts import render
 from django.db.models import Count
-from .models import EDepartment
-from .models import ECirculationSheet
+from django.db.models import F
 from django.db.models import Q
-from .models import ECurriculum, ECurriculumSubject, EEducationYear, HCourse, HSubjectBlock, HSubjectGroup, EStudentMeta
-
+from .models import *
 
 # Create your views here.
 
@@ -29,8 +28,50 @@ def yonalish_view(request, kafedra_id):
     return render(request, "fanlar.html", context)
 
 
+
+def fanlarga_birikishview(request):
+
+    #
+    # context = {
+    #     "year_list1": EEducationYear.objects.all().order_by('code'),
+    #     "fan_list": ECurriculumSubject.objects.filter(field_curriculum__active=True).values('field_semester').annotate(
+    #     count=Count('field_semester')).order_by('field_semester'),
+    #     "fakultet_list1": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
+    #     "fanga_birikish": EStudentMeta.objects.filter(field_student_status=11, active=True, ).order_by('field_department__name', 'field_education_year__name').filter(
+    #     ~Q(field_department__in=[7, 8, 77]))[:20],
+    # }
+
+    queryset = (
+        HSemestr.objects
+        .select_related('field_education_year', 'field_curriculum__field_department')
+        .filter(field_curriculum__field_education_form='11', field_curriculum__field_education_year='2023')
+        .order_by('field_curriculum__field_education_year')
+        .values('field_curriculum__field_department__name','field_curriculum__field_education_year', 'field_curriculum__field_education_year__name','field_education_year','name')
+        .distinct()
+    )
+
+    context = {
+        'queryset': queryset
+    }
+
+    return render(request, "fanlarga_birikish.html", context)
+
+
+
+
+
+
 def oquv_yiliview(request):
-    student_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values('field_department__name',
+    # code = int(oquv_yiliview()[0][2]) - 10
+    # h = HSemestr.objects.filter(field_education_year=oquv_yiliview()[0][0],
+    #                             code__in=[f"{10 + i}" for i in range(code, 11, 2)])
+    # cur_ids = []
+    # for i in h:
+    #     cur_ids.append(i.field_curriculum_id)
+    #
+
+
+    student_list = EStudentMeta.objects.filter(field_student_status=11, active=True,field_curriculum__in=cur_ids).values('field_department__name',
                                                                                             'field_education_year__name').annotate(
         count=Count('field_department__name')).order_by('field_department__name', 'field_education_year__name').filter(
         ~Q(field_department_id__in=[7, 8, 77,6]))

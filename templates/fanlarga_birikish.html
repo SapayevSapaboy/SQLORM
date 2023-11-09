@@ -1,0 +1,83 @@
+
+
+            <div class="select-container row ">
+                {% csrf_token %}
+                <div class="form-floating col-md-4 col-lg-2 col-sm-6">
+                    <select id="fakultet" name="fakultet" class="form-select">
+                        <option hidden selected disabled value="">Fakultetni tanlang</option>
+                        {% for i in queryset %}
+                            <option value="{{ i.field_curriculum__field_department__name }}">{{ i.field_curriculum__field_department__name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="fakultet">Fakultet</label>
+                </div>
+
+                <div class="form-floating col-md-4 col-lg-2 col-sm-6">
+                    <select id="fakultet" name="fakultet" class="form-select">
+                        <option hidden selected disabled value="">O'quv yilini tanlang</option>
+                        {% for i in queryset %}
+                            <option value="{{ i}}"  {% if request.GET.items == i %}selected{% endif %} >{{ i.field_curriculum__field_education_year__name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="fakultet">O'quv yili</label>
+                </div>
+                <div class="form-floating col-md-4 col-lg-2 col-sm-6">
+                    <select id="fakultet" name="fakultet" class="form-select">
+                        <option hidden selected disabled value="">Semestrni tanlang</option>
+                        {% for i in queryset %}
+                            <option value="{{ i.name }}">{{ i.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="fakultet">Semestr</label>
+                </div>
+
+                </div>
+            </div>
+
+
+            <br>
+            <br>
+            <table id="talaba_kontingent_table" class="table table-bordered">
+                <thead>
+                <tr style="background-color: #364958;">
+                    <th scope="col" style="text-align: center;color: white;  vertical-align: middle;">№</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">FAKULTETLAR</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">O'QUV REJA</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">SEMESTER</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">TALABALAR</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">FANLAR</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">YUKLAMA</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">KREDIT</th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKKAN TALABALAR
+                    </th>
+                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKMAGAN
+                        TALABALAR
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for f in fanga_birikish %}
+                    <tr>
+                        <td style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</td>
+                        <td style="text-align: center">{{ f.field_department.name }}</td>
+                        <td style="text-align: center">{{ f.field_curriculum.name }}</td>
+                        <td style="text-align: center">{{ f.field_semestr }}</td>
+                        <td style="text-align: center">{{ f.field_curriculum.estudentmeta_set.filter.count }}</td>
+                        <td style="text-align: center">{{ f.field_curriculum.ecurriculumsubject_set.count}}</td>
+                        <td style="text-align: center"> </td>
+                        <td style="text-align: center"> </td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
+                    </tr>
+
+                {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+
+</body>
+</html>
