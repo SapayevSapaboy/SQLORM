@@ -24,16 +24,17 @@
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">Fakultetni tanlang</option>
                         {% for i in queryset %}
-                            <option value="">{{ i.field_curriculum__field_department__name }}</option>
+                            <option value="{{ i.field_curriculum__field_department__name }}">{{ i.field_curriculum__field_department__name }}</option>
                         {% endfor %}
                     </select>
                     <label for="fakultet">Fakultet</label>
                 </div>
+
                 <div class="form-floating col-md-4 col-lg-2 col-sm-6">
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">O'quv yilini tanlang</option>
                         {% for i in queryset %}
-                            <option value="">{{ i.field_curriculum__field_education_year__name }}</option>
+                            <option value="{{ i}}"  {% if request.GET.items == i %}selected{% endif %} >{{ i.field_curriculum__field_education_year__name }}</option>
                         {% endfor %}
                     </select>
                     <label for="fakultet">O'quv yili</label>
@@ -42,7 +43,7 @@
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">Semestrni tanlang</option>
                         {% for i in queryset %}
-                            <option value="">{{ i.name }}</option>
+                            <option value="{{ i.name }}">{{ i.name }}</option>
                         {% endfor %}
                     </select>
                     <label for="fakultet">Semestr</label>
