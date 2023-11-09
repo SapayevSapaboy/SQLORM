@@ -23,8 +23,8 @@
                 <div class="form-floating col-md-4 col-lg-2 col-sm-6">
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">Fakultetni tanlang</option>
-                        {% for i in fakultet_list1 %}
-                            <option value="">{{ i.name }}</option>
+                        {% for i in queryset %}
+                            <option value="">{{ i.field_curriculum__field_department__name }}</option>
                         {% endfor %}
                     </select>
                     <label for="fakultet">Fakultet</label>
@@ -32,8 +32,8 @@
                 <div class="form-floating col-md-4 col-lg-2 col-sm-6">
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">O'quv yilini tanlang</option>
-                        {% for i in year_list1 %}
-                            <option value="">{{ i.name }}</option>
+                        {% for i in queryset %}
+                            <option value="">{{ i.field_curriculum__field_education_year__name }}</option>
                         {% endfor %}
                     </select>
                     <label for="fakultet">O'quv yili</label>
@@ -41,8 +41,8 @@
                 <div class="form-floating col-md-4 col-lg-2 col-sm-6">
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">Semestrni tanlang</option>
-                        {% for i in fan_list %}
-                            <option value="">{{ i.field_semester }}</option>
+                        {% for i in queryset %}
+                            <option value="">{{ i.name }}</option>
                         {% endfor %}
                     </select>
                     <label for="fakultet">Semestr</label>
