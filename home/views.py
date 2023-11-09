@@ -42,13 +42,12 @@ def fanlarga_birikishview(request):
 
     queryset = (
         HSemestr.objects
-        .select_related('field_education_year', 'field_curriculum__field_department','field_curriculum_name')
-        .filter(field_curriculum__field_education_form='11', field_curriculum__field_education_year='2023',field_curriculum__field_department='2')
-        .order_by('field_curriculum__field_education_year')
-        .values('field_curriculum__field_department__name',
-                'field_curriculum__field_education_year', 'field_curriculum__field_education_year__name',
-                'field_education_year', 'name','field_curriculum__name')
-        .distinct()[:100]
+        .select_related('field_curriculum__field_education_year', 'field_curriculum__field_department','field_curriculum__curriculum_subject')
+        .filter(field_curriculum__field_education_form='11', field_education_year='2023',field_curriculum__field_department='2')
+        .order_by('field_curriculum__field_education_year', 'field_curriculum__name')
+        .values('field_curriculum__field_department__name', 'field_curriculum__field_education_year',
+                'field_curriculum__field_education_year__name', 'field_education_year', 'name', 'field_curriculum__name')
+        .distinct()
     )
 
     context = {
