@@ -62,13 +62,13 @@ def fanlarga_birikishview(request):
 
 
 def oquv_yiliview(request):
-    # code = int(oquv_yiliview()[0][2]) - 10
-    # h = HSemestr.objects.filter(field_education_year=oquv_yiliview()[0][0],
-    #                             code__in=[f"{10 + i}" for i in range(code, 11, 2)])
-    # cur_ids = []
-    # for i in h:
-    #     cur_ids.append(i.field_curriculum_id)
-    #
+    code = 11
+    h = HSemestr.objects.filter(field_education_year=oquv_yiliview()[0][0],
+                                code__in=[f"{10 + i}" for i in range(11, 11, 2)])
+    cur_ids = []
+    for i in h:
+        cur_ids.append(i.field_curriculum_id)
+
 
 
     student_list = EStudentMeta.objects.filter(field_student_status=11, active=True,field_curriculum__in=cur_ids).values('field_department__name',
