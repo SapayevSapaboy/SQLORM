@@ -42,19 +42,18 @@ def fanlarga_birikishview(request):
 
     queryset = (
         HSemestr.objects
-        .select_related('field_curriculum__field_department', 'field_curriculum__field_education_year')
+        .select_related('field_curriculum__field_department', 'field_curriculum__field_education_year','field_curriculum__name')
         .filter(field_curriculum__field_education_form='11', field_curriculum__field_education_year='2023',
                 field_curriculum__field_department_id='2')
         .order_by('field_curriculum__field_education_year')
-        .values('field_curriculum__field_department__name', 'field_curriculum__field_education_year',
-                'field_curriculum__field_education_year__name', 'field_education_year', 'name')
+        .values('field_curriculum__field_department__name', 'field_curriculum__name', 'field_curriculum__field_education_year',
+                 'field_education_year__name', 'name')
         .distinct()
     )
 
     context = {
         'queryset': queryset
     }
-    results = queryset.all()
     return render(request, "fanlarga_birikish.html", context)
 
 

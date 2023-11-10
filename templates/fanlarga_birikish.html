@@ -24,7 +24,7 @@
                     <select id="fakultet" name="fakultet" class="form-select">
                         <option hidden selected disabled value="">Fakultetni tanlang</option>
                         {% for i in queryset %}
-                            <option value="{{ i.field_curriculum__field_department__name }}">{{ i.field_curriculum__field_department__name }}</option>
+                            <option value="">{{ i.field_curriculum__field_department__name }}</option>
                         {% endfor %}
                     </select>
                     <label for="fakultet">Fakultet</label>
@@ -74,14 +74,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for f in fanga_birikish %}
+                {% for f in queryset %}
                     <tr>
                         <td style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</td>
-                        <td style="text-align: center">{{ f.field_department.name }}</td>
-                        <td style="text-align: center">{{ f.field_curriculum.name }}</td>
-                        <td style="text-align: center">{{ f.field_semestr }}</td>
-                        <td style="text-align: center">{{ f.field_curriculum.estudentmeta_set.filter.count }}</td>
-                        <td style="text-align: center">{{ f.field_curriculum.ecurriculumsubject_set.count}}</td>
+                        <td style="text-align: center">{{ f.field_curriculum__field_department__name }}</td>
+                        <td style="text-align: center">{{ f.field_curriculum__name }}</td>
+                        <td style="text-align: center">{{ f.name }}</td>
+                        <td style="text-align: center"></td>
+                        <td style="text-align: center"></td>
                         <td style="text-align: center"> </td>
                         <td style="text-align: center"> </td>
                         <td style="text-align: center"></td>
