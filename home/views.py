@@ -47,6 +47,12 @@ def fanlarga_birikishview(request):
         .order_by('field_curriculum__field_education_year', 'field_curriculum__name')
         .values('field_curriculum__field_department__name', 'field_curriculum__field_education_year',
                 'field_curriculum__field_education_year__name', 'field_education_year', 'name', 'field_curriculum__name')
+        .select_related('field_curriculum__field_department', 'field_curriculum__field_education_year')
+        .filter(field_curriculum__field_education_form='11', field_curriculum__field_education_year='2023',
+                field_curriculum__field_department_id='2')
+        .order_by('field_curriculum__field_education_year')
+        .values('field_curriculum__field_department__name', 'field_curriculum__field_education_year',
+                'field_curriculum__field_education_year__name', 'field_education_year', 'name')
         .distinct()
     )
 
@@ -58,13 +64,12 @@ def fanlarga_birikishview(request):
 
 
 def oquv_yiliview(request):
-    # code = int(oquv_yiliview()[0][2]) - 10
-    # h = HSemestr.objects.filter(field_education_year=oquv_yiliview()[0][0],
-    #                             code__in=[f"{10 + i}" for i in range(code, 11, 2)])
-    # cur_ids = []
-    # for i in h:
-    #     cur_ids.append(i.field_curriculum_id)
-    #
+    code = 11
+    h = HSemestr.objects.filter(field_education_year=oquv_yiliview()[0][0],
+                                code__in=[f"{10 + i}" for i in range(11, 11, 2)])
+    cur_ids = []
+    for i in h:
+        cur_ids.append(i.field_curriculum_id)
 
     student_list = EStudentMeta.objects.filter(field_student_status=11, active=True,
                                                field_curriculum__in=cur_ids).values('field_department__name',
@@ -124,6 +129,9 @@ def oquv_yiliview(request):
         data[cnt].append(a)
         data[cnt].append((i[3] / a * 100))
         sum_foiz += (i[3] / a * 100) / len(data)
+        b = "%.2f" % ((i[3] / a * 100))
+        data[cnt].append(b)
+        sum_foiz += float(b)
         cnt += 1
     # for i in data:
     #     print(i)
@@ -135,29 +143,7 @@ def oquv_yiliview(request):
         'sum_year_list': sum_year_list,
         'sum_foiz': sum_foiz
         # "department": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
+        'sum_foiz': sum_foiz / len(data)
     }
-    # print(context['student_list'])
+
     return render(request, "oquv_yili.html", context)
-
-# def dependantfild(request):
-#   yearid = request.GET.get('year', None)
-#  stateid = request.GET.get('state', None)
-# state = None
-# district = None
-# if countryid:
-#     getyear = EEducationYear.objects.get(id= yearid)
-#     state = ECurriculum.objects.get(emp)
-
-# def fanlarview(request,kafedra_id):
-#     edu_year_list={}
-#     current_year=datetime.datetime.now().year
-#     for i in range(2016,current_year+1):
-#         edu_year_list.update({f"{i}":f"{i}-{i+1}"})
-#
-#     context = {
-#         "edu_year_list":edu_year_list,
-#         "oquvyili": ECirculationSheet.objects.filter(field_department__field_structure_type=11)
-#     }
-#
-#     return render(request, 'fanlar.html',context)
-#
