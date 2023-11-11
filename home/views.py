@@ -8,6 +8,9 @@ from django.db.models import Q
 from .models import *
 
 
+# from django.db.postgres.aggregates import ArrayAgg
+
+
 # Create your views here.
 
 def homeview(request):
@@ -30,29 +33,9 @@ def yonalish_view(request, kafedra_id):
 
 
 def fanlarga_birikishview(request):
-    #
-    # context = {
-    #     "year_list1": EEducationYear.objects.all().order_by('code'),
-    #     "fan_list": ECurriculumSubject.objects.filter(field_curriculum__active=True).values('field_semester').annotate(
-    #     count=Count('field_semester')).order_by('field_semester'),
-    #     "fakultet_list1": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
-    #     "fanga_birikish": EStudentMeta.objects.filter(field_student_status=11, active=True, ).order_by('field_department__name', 'field_education_year__name').filter(
-    #     ~Q(field_department__in=[7, 8, 77]))[:20],
-    # }
-
-    queryset = (
-        HSemestr.objects
-        .select_related('field_curriculum__field_department', 'field_curriculum__field_education_year','field_curriculum__name')
-        .filter(field_curriculum__field_education_form='11', field_curriculum__field_education_year='2023',
-                field_curriculum__field_department_id='2')
-        .order_by('field_curriculum__field_education_year')
-        .values('field_curriculum__field_department__name', 'field_curriculum__name', 'field_curriculum__field_education_year',
-                 'field_education_year__name', 'name')
-        .distinct()
-    )
-
+    fakultet_list = EDepartment.objects.filter(field_structure_type=12),
     context = {
-        'queryset': queryset
+        'fakultet_list': fakultet_list
     }
     return render(request, "fanlarga_birikish.html", context)
 
