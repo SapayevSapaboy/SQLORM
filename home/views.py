@@ -30,36 +30,11 @@ def yonalish_view(request, kafedra_id):
 
 
 def fanlarga_birikishview(request):
-    #
-    # context = {
-    #     "year_list1": EEducationYear.objects.all().order_by('code'),
-    #     "fan_list": ECurriculumSubject.objects.filter(field_curriculum__active=True).values('field_semester').annotate(
-    #     count=Count('field_semester')).order_by('field_semester'),
-    #     "fakultet_list1": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
-    #     "fanga_birikish": EStudentMeta.objects.filter(field_student_status=11, active=True, ).order_by('field_department__name', 'field_education_year__name').filter(
-    #     ~Q(field_department__in=[7, 8, 77]))[:20],
-    # }
-
-    queryset = (
-        HSemestr.objects
-        .select_related('field_curriculum__field_education_year', 'field_curriculum__field_department','field_curriculum__curriculum_subject')
-        .filter(field_curriculum__field_education_form='11', field_education_year='2023',field_curriculum__field_department='2')
-        .order_by('field_curriculum__field_education_year', 'field_curriculum__name')
-        .values('field_curriculum__field_department__name', 'field_curriculum__field_education_year',
-                'field_curriculum__field_education_year__name', 'field_education_year', 'name', 'field_curriculum__name')
-        .select_related('field_curriculum__field_department', 'field_curriculum__field_education_year')
-        .filter(field_curriculum__field_education_form='11', field_curriculum__field_education_year='2023',
-                field_curriculum__field_department_id='2')
-        .order_by('field_curriculum__field_education_year')
-        .values('field_curriculum__field_department__name', 'field_curriculum__field_education_year',
-                'field_curriculum__field_education_year__name', 'field_education_year', 'name')
-        .distinct()
-    )
-
+    fakultet_list = EDepartment.objects.filter(field_structure_type=12),
     context = {
-        'queryset': queryset
+        'fakultet_list': fakultet_list
     }
-
+    results = queryset.all()
     return render(request, "fanlarga_birikish.html", context)
 
 
@@ -75,11 +50,11 @@ def oquv_yiliview(request):
                                                field_curriculum__in=cur_ids).values('field_department__name',
                                                                                     'field_education_year__name').annotate(
         count=Count('field_department__name')).order_by('field_department__name', 'field_education_year__name').filter(
-        ~Q(field_department_id__in=[7, 8, 77, 6]))
+        ~Q(field_department__in=[7, 8, 77]))
 
     year_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values(
         'field_education_year__name').annotate(count=Count('id')).filter(
-        ~Q(field_department_id__in=[7, 8, 77, 6]))
+        ~Q(field_department__in=[7, 8, 77]))
     sum_year_list = 0
     for i in year_list:
         sum_year_list += i['count']
@@ -133,8 +108,6 @@ def oquv_yiliview(request):
         data[cnt].append(b)
         sum_foiz += float(b)
         cnt += 1
-    # for i in data:
-    #     print(i)
 
     context = {
 
