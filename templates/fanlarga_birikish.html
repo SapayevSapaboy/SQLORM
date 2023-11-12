@@ -9,58 +9,19 @@
     <title>Fanga biriktirish</title>
 </head>
 <body>
-
 {% block content %}
     <br>
     <h4 class="text-center">FANLARGA BIRIKMAGAN TALABALARNI ANIQLASH KO'RSATKICHI</h4>
     <BR>
     <div class="container">
-        <div class="row">
-
-
-            <div class="select-container row ">
-                {% csrf_token %}
-                <div class="form-floating col-md-4 col-lg-2 col-sm-6">
-                    <select id="fakultet" name="fakultet" class="form-select">
-                        <option hidden selected disabled value="">Fakultetni tanlang</option>
-                        {% for i in fakultet_list %}
-                            <option value="">{{ i.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <label for="fakultet">Fakultet</label>
-                </div>
-
-                <div class="form-floating col-md-4 col-lg-2 col-sm-6">
-                    <select id="fakultet" name="fakultet" class="form-select">
-                        <option hidden selected disabled value="">O'quv yilini tanlang</option>
-                        {% for i in queryset %}
-                            <option value="">{{ i.field_education_year__name }}</option>
-                        {% endfor %}
-                    </select>
-                    <label for="fakultet">O'quv yili</label>
-                </div>
-                <div class="form-floating col-md-4 col-lg-2 col-sm-6">
-                    <select id="fakultet" name="fakultet" class="form-select">
-                        <option hidden selected disabled value="">Semestrni tanlang</option>
-                        {% for i in queryset %}
-                            <option value="{{ i.name }}">{{ i.name }}</option>
-                        {% endfor %}
-                    </select>
-                    <label for="fakultet">Semestr</label>
-                </div>
-
-            </div>
-        </div>
-
-        <br>
-        <br>
-
         <div class="row" id="data-grid-filters">
             <div class="col col-md-2">
                 <div class="form-group field-estudentmeta-_department">
                     <select id="fakultet" name="fakultet" class="form-control select2-hidden-accessible">
                         <option value="">Fakultetni tanlang</option>
-                        <option value="11">Xorijiy filologiya fakulteti</option>
+                        {% for i in fakultet_list %}
+                            <option value="">{{ i.name }}</option>
+                        {% endfor %}
                     </select>
 
                 </div>
@@ -82,7 +43,6 @@
                 </div>
             </div>
         </div>
-
 
 
         <table id="talaba_kontingent_table" class="table table-bordered">
@@ -118,41 +78,6 @@
                     <td style="text-align: center"></td>
                     <td style="text-align: center"></td>
                 </tr>
-
-            <br>
-            <br>
-            <table id="talaba_kontingent_table" class="table table-bordered">
-                <thead>
-                <tr style="background-color: #364958;">
-                    <th scope="col" style="text-align: center;color: white;  vertical-align: middle;">№</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">FAKULTETLAR</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">O'QUV REJA</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">SEMESTER</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">TALABALAR</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">FANLAR</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">YUKLAMA</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">KREDIT</th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKKAN TALABALAR
-                    </th>
-                    <th scope="col" style="text-align: center;color: white; vertical-align: middle;">BRIKMAGAN
-                        TALABALAR
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for f in queryset %}
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle;">{{ forloop.counter }}</td>
-                        <td style="">{{ f.field_curriculum__field_department__name }}</td>
-                        <td style="text-align: center">{{ f.field_curriculum__name }}</td>
-                        <td style="text-align: center">{{ f.name }}</td>
-                        <td style="text-align: center">{{ f.field_education_year__esubjecttaskstudent__field_student.count }}</td>
-                        <td style="text-align: center">{{ f.field_curriculum__field_education_year__name}}</td>
-                        <td style="text-align: center"> </td>
-                        <td style="text-align: center"> </td>
-                        <td style="text-align: center"></td>
-                        <td style="text-align: center"></td>
-                    </tr>
 
             {% endfor %}
             </tbody>

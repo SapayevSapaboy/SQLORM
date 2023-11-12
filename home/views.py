@@ -34,7 +34,6 @@ def fanlarga_birikishview(request):
     context = {
         'fakultet_list': fakultet_list
     }
-    results = queryset.all()
     return render(request, "fanlarga_birikish.html", context)
 
 
@@ -100,10 +99,8 @@ def oquv_yiliview(request):
     cnt = 0
     sum_foiz = 0
     for i in data:
-        a = i[1] + i[2] + i[3] + i[4]
+        a = sum(i[1:6])
         data[cnt].append(a)
-        data[cnt].append((i[3] / a * 100))
-        sum_foiz += (i[3] / a * 100) / len(data)
         b = "%.2f" % ((i[3] / a * 100))
         data[cnt].append(b)
         sum_foiz += float(b)
@@ -114,8 +111,6 @@ def oquv_yiliview(request):
         "year_list": year_list,
         'data': data,
         'sum_year_list': sum_year_list,
-        'sum_foiz': sum_foiz
-        # "department": EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77])),
         'sum_foiz': sum_foiz / len(data)
     }
 
