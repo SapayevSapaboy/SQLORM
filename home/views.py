@@ -1,6 +1,6 @@
 import datetime
 from multiprocessing import connection
-
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.db.models import Count
 from django.db.models import F
@@ -30,10 +30,15 @@ def yonalish_view(request, kafedra_id):
 
 
 def fanlarga_birikishview(request):
-    fakultet_list = EDepartment.objects.filter(field_structure_type=12),
+    fakultet_list = EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77]))
+    year_list = EEducationYear.objects.all().values('name').annotate(count=Count('name')).order_by('name')
+    semestr_list = HSemestr.objects.all().values('name').annotate(count=Count('name')).order_by('name')
     context = {
-        'fakultet_list': fakultet_list
+        'fakultet_list': fakultet_list,
+        'year_list': year_list,
+        'semestr_list': semestr_list
     }
+
     return render(request, "fanlarga_birikish.html", context)
 
 
