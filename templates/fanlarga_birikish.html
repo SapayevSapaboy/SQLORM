@@ -60,9 +60,10 @@
                 <div class="form-group field-estudentmeta-_department">
                     <select id="fakultet" name="fakultet" class="form-control select2-hidden-accessible">
                         <option value="">Fakultetni tanlang</option>
-                        <option value="11">Xorijiy filologiya fakulteti</option>
+                         {% for i in queryset %}
+                            <option value="">{{ i.field_education_year__name }}</option>
+                        {% endfor %}
                     </select>
-
                 </div>
             </div>
             <div class="col col-md-2">
