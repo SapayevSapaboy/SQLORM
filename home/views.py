@@ -28,7 +28,7 @@ def yonalish_view(request, kafedra_id):
 
     return render(request, "fanlar.html", context)
 
-
+# FANLARGA BIRIKMAGAN TALABALARNI ANIQLASH KO'RSATKICHI
 def fanlarga_birikishview(request):
     fakultet_list = EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77]))
     year_list = EEducationYear.objects.all().values('name').annotate(count=Count('name')).order_by('name')
@@ -43,15 +43,14 @@ def fanlarga_birikishview(request):
 
 
 def oquv_yiliview(request):
-    code = 11
-    h = HSemestr.objects.filter(field_education_year=oquv_yiliview()[0][0],
-                                code__in=[f"{10 + i}" for i in range(11, 11, 2)])
-    cur_ids = []
-    for i in h:
-        cur_ids.append(i.field_curriculum_id)
+    # code = 11
+    # h = HSemestr.objects.filter(field_education_year=oquv_yiliview()[0][0],
+    #                             code__in=[f"{10 + i}" for i in range(11, 11, 2)])
+    # cur_ids = []
+    # for i in h:
+    #     cur_ids.append(i.field_curriculum_id)
 
-    student_list = EStudentMeta.objects.filter(field_student_status=11, active=True,
-                                               field_curriculum__in=cur_ids).values('field_department__name',
+    student_list = EStudentMeta.objects.filter(field_student_status=11, active=True).values('field_department__name',
                                                                                     'field_education_year__name').annotate(
         count=Count('field_department__name')).order_by('field_department__name', 'field_education_year__name').filter(
         ~Q(field_department__in=[7, 8, 77]))
