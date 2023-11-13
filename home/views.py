@@ -30,13 +30,33 @@ def yonalish_view(request, kafedra_id):
 
 # FANLARGA BIRIKMAGAN TALABALARNI ANIQLASH KO'RSATKICHI
 def fanlarga_birikishview(request):
-    fakultet_list = EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77]))
-    year_list = EEducationYear.objects.all().values('name').annotate(count=Count('name')).order_by('name')
-    semestr_list = HSemestr.objects.all().values('name').annotate(count=Count('name')).order_by('name')
+    queryset = EStudentMeta.objects.filter(
+        field_student_status='11',
+        active=True,
+        field_department='2',
+        field_education_year='2023',
+        field_curriculum__field_education_form='11',
+        field_curriculum__active=True,
+    ).annotate(
+        field_department_name=F('field_department__name'),
+        field_curriculum_name=F('field_curriculum__name'),
+        field_education_year_name=F('field_curriculum__field_education_year__name')
+    ).values(
+        'field_department_name', 'field_curriculum_name', 'field_education_year__name'
+    )
+
+    print(queryset.query)
+
+
+
+    # fakultet_list = EDepartment.objects.filter(field_structure_type=11).filter(~Q(id__in=[7, 8, 76, 77]))
+    # year_list = EEducationYear.objects.all().values('name').annotate(count=Count('name')).order_by('name')
+    # semestr_list = HSemestr.objects.all().values('name').annotate(count=Count('name')).order_by('name')
     context = {
-        'fakultet_list': fakultet_list,
-        'year_list': year_list,
-        'semestr_list': semestr_list
+        # 'fakultet_list': fakultet_list,
+        # 'year_list': year_list,
+        # 'semestr_list': semestr_list
+        'queryset': queryset
     }
 
     return render(request, "fanlarga_birikish.html", context)
